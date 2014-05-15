@@ -171,6 +171,7 @@ void process::generate_gate_level_sizing()
 		for (size_t j = 0; j < fanout[i].size(); j++)
 			if (fanout[i][j] > 0.0)
 				log("", vars.globals[i].name[0] + "/" + vars.globals[j].name[0] + ":" + string(2 - (vars.globals[i].name[0].size() + 2 + vars.globals[j].name[0].size())/8, '\t') + to_string(initial_fanout[i][j], 5) + "\t" + to_string(fanout[i][j], 5), __FILE__, __LINE__);
+
 	log("", "", __FILE__, __LINE__);
 
 	log("", "Resulting Scale Factors:", __FILE__, __LINE__);
