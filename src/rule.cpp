@@ -77,7 +77,7 @@ void rule::print(ostream &os, string newl)
 		os << "-";
 }
 
-vector<vector<int> > rule::generate_program()
+vector<vector<float> > rule::generate_program()
 {
 	return left.generate_program(right.uid);
 }

@@ -26,7 +26,7 @@ struct rule : instruction
 	void parse(tokenizer &tokens, variable_space &vars);
 	void print(ostream &os, string newl);
 
-	vector<vector<int> > generate_program();
+	vector<vector<float> > generate_program();
 	void set_sizes(vector<float> sizes);
 	void clear_sizes();
 	void calculate_transistor_sizes();

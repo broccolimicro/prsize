@@ -119,16 +119,16 @@ void expression::print(ostream &os, string newl)
 	}
 }
 
-vector<vector<int> > expression::generate_program(size_t uid)
+vector<vector<float> > expression::generate_program(size_t uid)
 {
-	vector<vector<int> > result;
+	vector<vector<float> > result;
 	for (size_t i = 0; i < terms.size(); i++)
 	{
 		if (terms[i]->kind() == "expression")
 		{
-			vector<vector<int> > temp = ((expression*)terms[i])->generate_program(uid);
+			vector<vector<float> > temp = ((expression*)terms[i])->generate_program(uid);
 			if (result.size() < temp.size())
-				result.resize(temp.size(), vector<int>());
+				result.resize(temp.size(), vector<float>());
 			for (size_t j = 0; j < temp.size(); j++)
 			{
 				if (result[j].size() < temp[j].size())
@@ -142,13 +142,13 @@ vector<vector<int> > expression::generate_program(size_t uid)
 		{
 			variable_name *temp = (variable_name*)terms[i];
 			if (result.size() < temp->uid+1)
-				result.resize(temp->uid+1, vector<int>());
+				result.resize(temp->uid+1, vector<float>());
 
 			if (result[temp->uid].size() < uid+1)
-				result[temp->uid].resize(uid+1, 0);
+				result[temp->uid].resize(uid+1, 0.0);
 
 			if (temp->size != NULL)
-				result[temp->uid][uid] += temp->size->value;
+				result[temp->uid][uid] += (float)temp->size->value;
 		}
 	}
 

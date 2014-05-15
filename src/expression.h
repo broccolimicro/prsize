@@ -27,7 +27,7 @@ struct expression : instruction
 	void parse(tokenizer &tokens, variable_space &vars);
 	void print(ostream &os = cout, string newl = "\n");
 
-	vector<vector<int> > generate_program(size_t uid);
+	vector<vector<float> > generate_program(size_t uid);
 	void set_sizes(float size);
 	void clear_sizes();
 	float size();

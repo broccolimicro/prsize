@@ -1,16 +1,20 @@
-CXXFLAGS =	-O2 -g -Wall -fmessage-length=0
+CXXFLAGS	 =  -O2 -g -Wall -fmessage-length=0
+SOURCES	    :=  $(shell find src -name '*.cpp')
+OBJECTS	    :=  $(SOURCES:src/%.cpp=build/%.o)
+DIRECTORIES :=  $(sort $(dir $(OBJECTS)))
+LDFLAGS		 =  
+TARGET		 =  size
 
-OBJS =	src/chp.o src/common.o src/constant.o src/expression.o src/instance.o src/instruction.o src/message.o src/rule.o src/tokenizer.o src/variable_name.o src/variable.o src/variable_space.o
+all: build $(TARGET)
 
-LIBS =
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJECTS) -o $(TARGET)
 
-TARGET =	size
-
-$(TARGET):	$(OBJS)
-	$(CXX) -o $(TARGET) $(OBJS) $(LIBS)
-
-all:	$(TARGET)
+build/%.o: src/%.cpp 
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -c -o $@ $<
+	
+build:
+	mkdir $(DIRECTORIES)
 
 clean:
-	rm -f $(OBJS) $(TARGET)
-	
+	rm -f $(OBJECTS) $(TARGET) $(TARGET).exe

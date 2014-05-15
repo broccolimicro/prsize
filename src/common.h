@@ -19,6 +19,7 @@
 #include <sstream>
 #include <math.h>
 #include <sys/time.h>
+#include <time.h>
 
 #include <vector>
 #include <list>
@@ -33,11 +34,14 @@
 using namespace std;
 
 template <class type>
-string to_string(type value)
+string to_string(type value, size_t size = (size_t)-1)
 {
 	ostringstream os;
 	os << value;
-	return os.str();
+	string result = os.str();
+	if (size != (size_t)-1)
+		result.resize(size, ' ');
+	return result;
 }
 
 bool ac(char c);
