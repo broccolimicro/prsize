@@ -67,7 +67,6 @@ void process::parse(tokenizer &tokens)
 		{
 			string n0 = tokens.next();
 			string n1 = tokens.next();
-			cout << "= " << n0 << " " << n1 << endl;
 
 			if (n0.size() > 0 && (n0[0] == '\"' || n0[0] == '\''))
 				n0 = n0.substr(1, n0.size()-2);
@@ -166,16 +165,26 @@ void process::generate_gate_level_sizing()
 
 	} while (progress < 500);
 
+	size_t max_name_length = 0;
+	size_t min_name_length = (size_t)-1;
+	for (size_t i = 0; i < vars.globals.size(); i++)
+	{
+		if (vars.globals[i].name[0].size() > max_name_length)
+			max_name_length = vars.globals[i].name[0].size();
+		if (vars.globals[i].name[0].size() < min_name_length)
+			min_name_length = vars.globals[i].name[0].size();
+	}
+
 	log("", "Fanout\t\tInitial\tFinal", __FILE__, __LINE__);
 	for (size_t i = 0; i < fanout.size(); i++)
 		for (size_t j = 0; j < fanout[i].size(); j++)
 			if (fanout[i][j] > 0.0)
-				log("", vars.globals[i].name[0] + "/" + vars.globals[j].name[0] + ":" + string(2 - (vars.globals[i].name[0].size() + 2 + vars.globals[j].name[0].size())/8, '\t') + to_string(initial_fanout[i][j], 5) + "\t" + to_string(fanout[i][j], 5), __FILE__, __LINE__);
+				log("", vars.globals[i].name[0] + "/" + vars.globals[j].name[0] + ":" + string((2*max_name_length + 2)/8 + 1 - (vars.globals[i].name[0].size() + 2 + vars.globals[j].name[0].size())/8, '\t') + to_string(initial_fanout[i][j], 5) + "\t" + to_string(fanout[i][j], 5), __FILE__, __LINE__);
 	log("", "", __FILE__, __LINE__);
 
 	log("", "Resulting Scale Factors:", __FILE__, __LINE__);
 	for (size_t j = 0; j < sizes.size(); j++)
-		log("", vars.globals[j].name[0] + ":" + string(2 - vars.globals[j].name[0].size()/8, '\t') + to_string(sizes[j]), __FILE__, __LINE__);
+		log("", vars.globals[j].name[0] + ":" + string(max_name_length/8 + 1 - vars.globals[j].name[0].size()/8, '\t') + to_string(sizes[j]), __FILE__, __LINE__);
 	log("", "", __FILE__, __LINE__);
 
 	for (size_t j = 0; j < rules.size(); j++)
