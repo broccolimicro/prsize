@@ -45,9 +45,7 @@ string instruction::kind()
  */
 void instruction::parse(tokenizer &tokens, variable_space &vars)
 {
-	if (this == NULL)
-		internal(tokens, "attempting to call the parse function of a null pointer", __FILE__, __LINE__);
-	else if (this->kind() == "expression")
+	if (this->kind() == "expression")
 		((expression*)this)->parse(tokens, vars);
 	else if (this->kind() == "rule")
 		((rule*)this)->parse(tokens, vars);
@@ -70,9 +68,7 @@ void instruction::parse(tokenizer &tokens, variable_space &vars)
  */
 void instruction::print(ostream &os, string newl)
 {
-	if (this == NULL)
-		os << "null";
-	else if (this->kind() == "expression")
+	if (this->kind() == "expression")
 		((expression*)this)->print(os, newl);
 	else if (this->kind() == "rule")
 		((rule*)this)->print(os, newl);
