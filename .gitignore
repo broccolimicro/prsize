@@ -4,5 +4,6 @@
 *.hse
 *.o
 *.sim
-size
+prsize
+test
 build
